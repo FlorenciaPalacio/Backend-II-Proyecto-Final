@@ -1,23 +1,23 @@
-import { productDAO } from "../dao/Factory.js";
+import { productDao } from "../dao/factory.js";
 
 export default class ProductService {
   getAll = async () => {
-    return await productDAO.getAll();
+    return await productDao.getAll();
   };
 
   getById = async (id) => {
-    return await productDAO.getById(id);
+    return await productDao.getById(id);
   };
 
   create = async (product) => {
-    return await productDAO.create(product);
+    return await productDao.create(product);
   };
 
   update = async (id, data) => {
-    return await productDAO.update(id, data);
+    return await productDao.update(id, data);
   };
 
   delete = async (id) => {
-    return await productDAO.delete(id);
+    return await productDao.delete(id);
   };
 }
