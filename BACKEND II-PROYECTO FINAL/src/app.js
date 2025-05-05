@@ -1,4 +1,6 @@
 import express from "express"; 
+import mongoose from "mongoose";
+import config from "./config/config.js";
 import { connectDB } from "./config/db.js";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
@@ -8,6 +10,12 @@ import viewsRouter from "./routes/views.router.js";
 const app = express(); 
 const PUERTO = 8080;
 connectDB();
+mongoose.connect(config.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ Conectado a MongoDB"))
+.catch((err) => console.error("❌ Error al conectar a MongoDB:", err));
 
 //Middleware: 
 app.use(express.json()); 
