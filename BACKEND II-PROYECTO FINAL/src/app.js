@@ -1,4 +1,5 @@
 import express from "express"; 
+import { connectDB } from "./config/db.js";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
@@ -6,6 +7,7 @@ import cartsRouter from "./routes/carts.router.js";
 import viewsRouter from "./routes/views.router.js";
 const app = express(); 
 const PUERTO = 8080;
+connectDB();
 
 //Middleware: 
 app.use(express.json()); 
