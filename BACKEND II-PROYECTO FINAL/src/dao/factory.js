@@ -1,11 +1,8 @@
 import config from "../config/config.js";
+import ProductManager from "../managers/product-manager.js";
+import CartManager from "../managers/cart-manager.js";
 
-// FS
-import ProductManager from "./fs/product.dao.js";
-import CartManager from "./fs/cart.dao.js";
-
-// Mongo
-import ProductMongo from "./mongo/product.mongo.js";
+import ProductMongoDAO from "./product.dao.mongo.js";
 
 let productDAO;
 let cartDAO;
@@ -17,12 +14,11 @@ switch (config.PERSISTENCE) {
     break;
 
   case "MONGO":
-    productDAO = new ProductMongo();
-    
+    productDAO = new ProductMongoDAO();
     break;
 
   default:
-    throw new Error("⚠️ Persistencia no soportada");
+    throw new Error("Persistencia no soportada");
 }
 
 export { productDAO, cartDAO };
