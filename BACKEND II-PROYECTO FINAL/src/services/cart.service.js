@@ -1,4 +1,4 @@
-import { cartDAO } from "../dao/Factory.js";
+import { cartDAO } from "../dao/factory.js"
 
 export default class CartService {
   getAll = async () => {
