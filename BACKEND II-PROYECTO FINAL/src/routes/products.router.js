@@ -1,62 +1,27 @@
-import express from "express"; 
-import ProductManager from "../managers/product-manager.js";
-const manager = new ProductManager("./src/data/productos.json");
+import express from "express";
+import {
+  getAllProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct
+} from "../controllers/product.controller.js";
+
 const router = express.Router();
 
+// Ruta GET para obtener todos los productos (con optional ?limit)
+router.get("/", getAllProducts);
 
-router.get("/", async (req, res) => {
-    try {
-        const limit = req.query.limit; 
-        const productos = await manager.getProducts(); 
+// Ruta GET para obtener un producto por ID
+router.get("/:pid", getProductById);
 
-        if(limit) {
-            res.json(productos.slice(0, limit)); 
-        } else {
-            res.json(productos); 
-        }
-    } catch (error) {
-        res.status(500).send("Error interno del servidor");
-    }
-})
+// Ruta POST para crear un nuevo producto
+router.post("/", createProduct);
 
-router.get("/:pid", async (req, res) => {
-    let id = req.params.pid; 
+// Ruta PUT para actualizar un producto por ID
+router.put("/:pid", updateProduct);
 
-    try {
-        const productoBuscado = await manager.getProductById(parseInt(id));
+// Ruta DELETE para eliminar un producto por ID
+router.delete("/:pid", deleteProduct);
 
-        if(!productoBuscado) {
-            res.send("Producto no encontrado");
-        } else {
-            res.json(productoBuscado); 
-        }
-    } catch (error) {
-        res.status(500).send("Error del servidor, llovera todo el fin de semana"); 
-    }
-})
-
-router.post("/", async (req, res) => {
-    const nuevoProducto = req.body; 
-
-    try {
-        await manager.addProduct(nuevoProducto); 
-        res.status(201).send("Producto agregado exitosamente");
-    } catch (error) {
-        res.status(500).send("Terrible error fatal, todo esta mal"); 
-    }
-
-})
-
-router.delete("/:pid", async (req, res) => {
-    let id = req.params.pid; 
-
-    try {
-        await manager.deleteProduct(parseInt(id)); 
-        res.send("Producto eliminado")
-    } catch (error) {
-        res.status(500).send("Error al querer borrar un producto"); 
-    }
-})
-
-
-export default router; 
+export default router;
